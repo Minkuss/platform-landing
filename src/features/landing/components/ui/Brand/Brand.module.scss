@@ -1,0 +1,15 @@
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  object-fit: contain;
+}
+
+.text {
+  font-family: var(--font-brand), sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+}

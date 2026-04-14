@@ -1,0 +1,26 @@
+.footer {
+  margin-top: auto;
+  background: #0D0D0D;
+  padding: 60px 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contacts p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 30px;
+  color: rgba(255, 255, 255, 0.9);
+}

@@ -1,0 +1,89 @@
+.section {
+  padding-top: 180px;
+}
+
+.title {
+  margin: 0;
+  font-size: 50px;
+  line-height: 1.1;
+  font-weight: 600;
+}
+
+.grid {
+  margin-top: 110px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+}
+
+.card {
+  min-height: 479px;
+  padding: 24px 30px;
+  display: grid;
+  align-content: start;
+}
+
+.logoCircle {
+  width: 167px;
+  height: 167px;
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  margin: -84px auto 18px;
+}
+
+.logoCircle img {
+  width: 130px;
+  height: auto;
+  object-fit: contain;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.text {
+  margin: 20px 0 0;
+  font-size: 16px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 1080px) {
+  .title {
+    font-size: 40px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .card {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding-top: 72px;
+  }
+
+  .title {
+    font-size: 34px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .logoCircle {
+    margin-top: -52px;
+    width: 132px;
+    height: 132px;
+  }
+}
