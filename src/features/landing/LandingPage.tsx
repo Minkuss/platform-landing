@@ -25,7 +25,7 @@ export function LandingPage() {
         <SectionReveal variant="fadeUp" delayMs={40}>
           <Benefits />
         </SectionReveal>
-        <SectionReveal variant="fadeLeft" delayMs={40}>
+        <SectionReveal variant="fadeLeft" delayMs={40} threshold={0.08} rootMargin="0px 0px 8% 0px">
           <Events />
         </SectionReveal>
         <SectionReveal variant="fadeRight" delayMs={40}>

@@ -11,6 +11,8 @@ type SectionRevealProps = {
   variant?: RevealVariant;
   delayMs?: number;
   once?: boolean;
+  threshold?: number | number[];
+  rootMargin?: string;
 };
 
 export function SectionReveal({
@@ -19,6 +21,8 @@ export function SectionReveal({
   variant = "fadeUp",
   delayMs = 0,
   once = true,
+  threshold = 0.2,
+  rootMargin = "0px 0px -12% 0px",
 }: SectionRevealProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
@@ -60,8 +64,8 @@ export function SectionReveal({
       },
       {
         root: null,
-        threshold: 0.2,
-        rootMargin: "0px 0px -12% 0px",
+        threshold,
+        rootMargin,
       },
     );
 
@@ -70,7 +74,7 @@ export function SectionReveal({
     return () => {
       observer.disconnect();
     };
-  }, [once, reducedMotion]);
+  }, [once, reducedMotion, rootMargin, threshold]);
 
   const style = {
     "--reveal-delay": `${delayMs}ms`,
