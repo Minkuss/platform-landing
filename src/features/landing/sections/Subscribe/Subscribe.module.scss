@@ -97,14 +97,10 @@
   font-size: 25px;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1200px) {
   .grid {
     grid-template-columns: 1fr;
     gap: 24px;
-  }
-
-  .form {
-    max-width: 660px;
   }
 
   .title {
