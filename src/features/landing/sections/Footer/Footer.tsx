@@ -7,7 +7,7 @@ export function Footer() {
     <footer className={styles.footer}>
       <LayoutContainer>
         <div className={styles.row}>
-          <Brand text="платформа" logoWidth={58} logoHeight={36} />
+          <Brand text="платформа" logoWidth={58} logoHeight={36} className={styles.brand} />
 
           <div className={styles.contacts}>
             <p>адрес: ул. Серышева 47</p>

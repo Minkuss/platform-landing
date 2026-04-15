@@ -5,9 +5,20 @@
 }
 
 .row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
+  column-gap: 36px;
+  row-gap: 18px;
+}
+
+.brand {
+  grid-column: 1;
+}
+
+.contacts {
+  grid-column: 2;
+  justify-self: center;
 }
 
 .contacts p {
@@ -18,9 +29,65 @@
 }
 
 .socials {
+  grid-column: 3;
+  justify-self: end;
   display: flex;
   align-items: center;
   gap: 12px;
   font-size: 30px;
   color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 1080px) {
+  .footer {
+    padding: 48px 0;
+  }
+
+  .row {
+    grid-template-columns: 1fr auto;
+    column-gap: 20px;
+    row-gap: 20px;
+  }
+
+  .brand {
+    grid-column: 1;
+  }
+
+  .socials {
+    grid-column: 2;
+    font-size: 26px;
+  }
+
+  .contacts {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 720px) {
+  .footer {
+    padding: 34px 0 38px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .contacts {
+    text-align: center;
+  }
+
+  .contacts p {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .socials {
+    justify-self: center;
+    font-size: 24px;
+    gap: 10px;
+  }
 }
