@@ -13,6 +13,9 @@ type SectionRevealProps = {
   once?: boolean;
   threshold?: number | number[];
   rootMargin?: string;
+  responsiveMaxWidth?: number;
+  responsiveThreshold?: number | number[];
+  responsiveRootMargin?: string;
 };
 
 export function SectionReveal({
@@ -23,9 +26,18 @@ export function SectionReveal({
   once = true,
   threshold = 0.2,
   rootMargin = "0px 0px -12% 0px",
+  responsiveMaxWidth,
+  responsiveThreshold,
+  responsiveRootMargin,
 }: SectionRevealProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(() => {
+    if (typeof window === "undefined") {
+      return null;
+    }
+    return window.innerWidth;
+  });
   const [reducedMotion, setReducedMotion] = useState(() => {
     if (typeof window === "undefined") {
       return false;
@@ -46,10 +58,36 @@ export function SectionReveal({
   }, []);
 
   useEffect(() => {
+    if (responsiveMaxWidth === undefined) {
+      return;
+    }
+
+    const updateViewportWidth = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    updateViewportWidth();
+    window.addEventListener("resize", updateViewportWidth);
+    return () => {
+      window.removeEventListener("resize", updateViewportWidth);
+    };
+  }, [responsiveMaxWidth]);
+
+  useEffect(() => {
     const node = rootRef.current;
     if (!node || reducedMotion) {
       return;
     }
+
+    const useResponsiveThreshold =
+      responsiveMaxWidth !== undefined &&
+      viewportWidth !== null &&
+      viewportWidth <= responsiveMaxWidth;
+
+    const observerThreshold =
+      useResponsiveThreshold && responsiveThreshold !== undefined ? responsiveThreshold : threshold;
+    const observerRootMargin =
+      useResponsiveThreshold && responsiveRootMargin !== undefined ? responsiveRootMargin : rootMargin;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -64,8 +102,8 @@ export function SectionReveal({
       },
       {
         root: null,
-        threshold,
-        rootMargin,
+        threshold: observerThreshold,
+        rootMargin: observerRootMargin,
       },
     );
 
@@ -74,7 +112,16 @@ export function SectionReveal({
     return () => {
       observer.disconnect();
     };
-  }, [once, reducedMotion, rootMargin, threshold]);
+  }, [
+    once,
+    reducedMotion,
+    responsiveMaxWidth,
+    responsiveRootMargin,
+    responsiveThreshold,
+    rootMargin,
+    threshold,
+    viewportWidth,
+  ]);
 
   const style = {
     "--reveal-delay": `${delayMs}ms`,
