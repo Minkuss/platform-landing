@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { navItems } from "../../data/landingData";
 import { Brand } from "../../components/ui/Brand/Brand";
 import { LayoutContainer } from "../../components/ui/LayoutContainer/LayoutContainer";
+import { LiquidGlassCard } from "../../components/ui/LiquidGlassCard/LiquidGlassCard";
 import styles from "./Header.module.scss";
 
 const emptySubscribe = () => () => {};
@@ -55,7 +56,11 @@ export function Header() {
           <div className={styles.headerRow}>
             <Brand />
 
-            <div className={styles.navPill}>
+            <LiquidGlassCard
+              as="div"
+              className={styles.navPill}
+              spotColor="rgba(255, 148, 72, 0.32)"
+            >
               <nav className={styles.nav}>
                 {navItems.map((item) => (
                   <a key={item} href="#">
@@ -63,7 +68,7 @@ export function Header() {
                   </a>
                 ))}
               </nav>
-            </div>
+            </LiquidGlassCard>
 
             <button
               className={`${styles.burger}${isMenuOpen ? ` ${styles.burgerOpen}` : ""}`}
