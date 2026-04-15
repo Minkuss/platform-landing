@@ -95,7 +95,9 @@ export function Events() {
                 aria-label="Предыдущий слайд"
                 disabled={clampedActiveSlide <= 0}
               >
-                <span>&larr;</span>
+                <svg className={`${styles.controlIcon} ${styles.controlIconPrev}`} viewBox="0 0 20 20" aria-hidden focusable="false">
+                  <path d="M7 4.5L13 10L7 15.5" />
+                </svg>
               </button>
               <button
                 className={styles.controlButton}
@@ -104,7 +106,9 @@ export function Events() {
                 aria-label="Следующий слайд"
                 disabled={clampedActiveSlide >= maxSlide}
               >
-                <span>&rarr;</span>
+                <svg className={styles.controlIcon} viewBox="0 0 20 20" aria-hidden focusable="false">
+                  <path d="M7 4.5L13 10L7 15.5" />
+                </svg>
               </button>
             </div>
           ) : null}

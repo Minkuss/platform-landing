@@ -39,10 +39,19 @@
   transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
-.controlButton span {
-  font-size: 28px;
-  line-height: 1;
-  transform: translateY(-1px);
+.controlIcon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.controlIconPrev {
+  transform: rotate(180deg);
 }
 
 .controlButton:hover {
@@ -165,8 +174,9 @@
     height: 46px;
   }
 
-  .controlButton span {
-    font-size: 24px;
+  .controlIcon {
+    width: 18px;
+    height: 18px;
   }
 
   .card {
