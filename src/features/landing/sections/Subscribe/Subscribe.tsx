@@ -4,7 +4,7 @@ import styles from "./Subscribe.module.scss";
 
 export function Subscribe() {
   return (
-    <section className={styles.section}>
+    <section id="subscribe" className={styles.section}>
       <LayoutContainer>
         <div className={styles.grid}>
           <div>

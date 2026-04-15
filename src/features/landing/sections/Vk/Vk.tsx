@@ -6,7 +6,7 @@ import styles from "./Vk.module.scss";
 
 export function Vk() {
   return (
-    <section className={styles.section}>
+    <section id="socials" className={styles.section}>
       <LayoutContainer>
         <h2 className={styles.title}>Мы в ВК</h2>
 

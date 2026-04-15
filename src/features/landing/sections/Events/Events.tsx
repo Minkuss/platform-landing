@@ -81,7 +81,7 @@ export function Events() {
   };
 
   return (
-    <section className={styles.section}>
+    <section id="events" className={styles.section}>
       <LayoutContainer>
         <div className={styles.header}>
           <h2 className={styles.title}>Последние мероприятия</h2>

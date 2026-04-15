@@ -9,6 +9,13 @@ import { LiquidGlassCard } from "../../components/ui/LiquidGlassCard/LiquidGlass
 import styles from "./Header.module.scss";
 
 const emptySubscribe = () => () => {};
+const navTargets: Record<string, string> = {
+  "О нас": "about",
+  "Мероприятия": "events",
+  "Рассылка": "subscribe",
+  "Соцсети": "socials",
+  "Партнеры": "partners",
+};
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,7 +70,7 @@ export function Header() {
             >
               <nav className={styles.nav}>
                 {navItems.map((item) => (
-                  <a key={item} href="#">
+                  <a key={item} href={`#${navTargets[item] ?? ""}`}>
                     {item}
                   </a>
                 ))}
@@ -106,7 +113,7 @@ export function Header() {
                   {navItems.map((item, index) => (
                     <a
                       key={item}
-                      href="#"
+                      href={`#${navTargets[item] ?? ""}`}
                       onClick={closeMenu}
                       tabIndex={isMenuOpen ? 0 : -1}
                       style={{ transitionDelay: `${80 + index * 55}ms` }}

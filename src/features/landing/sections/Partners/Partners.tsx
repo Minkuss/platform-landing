@@ -12,7 +12,7 @@ export function Partners() {
   ];
 
   return (
-    <section className={styles.section}>
+    <section id="partners" className={styles.section}>
       <LayoutContainer>
         <h2 className={styles.title}>Партнеры</h2>
 

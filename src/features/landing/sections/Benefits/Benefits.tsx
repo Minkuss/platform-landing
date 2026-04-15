@@ -12,7 +12,7 @@ export function Benefits() {
   ];
 
   return (
-    <section className={styles.section}>
+    <section id="about" className={styles.section}>
       <LayoutContainer>
         <h2 className={styles.title}>Платформа для тебя, если ты</h2>
 
