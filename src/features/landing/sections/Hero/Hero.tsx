@@ -192,7 +192,9 @@ export function Hero() {
             <p className={styles.description}>
                 Платформа  – это двухкомпонентная система: с одной стороны – структурированное обучение, с другой – серия конкурсных заданий для отработки навыков от реальных заказчиков.
             </p>
-            <GradientButton>Узнать подробнее</GradientButton>
+            <GradientButton href="https://vk.com/pl4tformakhv" target="_blank" rel="noopener noreferrer">
+              Узнать подробнее
+            </GradientButton>
           </div>
 
           <div

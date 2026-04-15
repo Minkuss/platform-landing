@@ -14,10 +14,16 @@ export function Footer() {
             <p>телефон: +7999 999 99 99</p>
           </div>
 
-          <div className={styles.socials}>
+          <a
+            className={styles.socials}
+            href="https://vk.com/pl4tformakhv"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Открыть Платформа во ВКонтакте"
+          >
             <span>@</span>
             <span>VK</span>
-          </div>
+          </a>
         </div>
       </LayoutContainer>
     </footer>

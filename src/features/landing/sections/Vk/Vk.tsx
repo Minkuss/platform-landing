@@ -15,7 +15,9 @@ export function Vk() {
         </div>
 
         <div className={styles.buttonWrap}>
-          <GradientButton>Подписаться в ВК</GradientButton>
+          <GradientButton href="https://vk.com/pl4tformakhv" target="_blank" rel="noopener noreferrer">
+            Подписаться в ВК
+          </GradientButton>
         </div>
       </LayoutContainer>
     </section>
