@@ -1,24 +1,11 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import localFont from "next/font/local";
 import "./globals.css";
 
 const montserrat = Montserrat({
   variable: "--font-main",
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600", "700"],
-});
-
-const browler = localFont({
-  src: [
-    {
-      path: "../../public/assets/fonts/BROWLER.ttf",
-      weight: "400",
-      style: "normal",
-    },
-  ],
-  variable: "--font-brand",
-  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${montserrat.variable} ${browler.variable}`}>
+    <html lang="ru" className={montserrat.variable}>
       <body>{children}</body>
     </html>
   );
