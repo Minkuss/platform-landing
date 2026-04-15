@@ -8,6 +8,10 @@ import { LayoutContainer } from "../../components/ui/LayoutContainer/LayoutConta
 import { heroWaves } from "../../data/landingData";
 import styles from "./Hero.module.scss";
 
+type NavigatorWithPerf = Navigator & {
+  deviceMemory?: number;
+};
+
 export function Hero() {
   const wavesRef = useRef<HTMLDivElement | null>(null);
   const noiseBackRef = useRef<SVGFETurbulenceElement | null>(null);
@@ -38,6 +42,17 @@ export function Hero() {
       return;
     }
 
+    const perfNavigator = navigator as NavigatorWithPerf;
+    const cpuCores = perfNavigator.hardwareConcurrency ?? 8;
+    const memoryGb = perfNavigator.deviceMemory ?? 8;
+    const lowPerfMode = cpuCores <= 4 || memoryGb <= 4;
+
+    if (lowPerfMode) {
+      backNode.style.filter = "none";
+      middleNode.style.filter = "none";
+      frontNode.style.filter = "drop-shadow(0 0 36px rgba(230, 95, 27, 0.3))";
+    }
+
     const setBackX = gsap.quickSetter(backNode, "x", "px");
     const setBackY = gsap.quickSetter(backNode, "y", "px");
     const setBackRotate = gsap.quickSetter(backNode, "rotate", "deg");
@@ -52,33 +67,50 @@ export function Hero() {
 
     let phase = Math.random() * Math.PI * 2;
     let filterTickAccumulator = 0;
+    let motionTickAccumulator = 0;
 
     const update = (_time: number, deltaMs: number) => {
-      phase += (deltaMs / 1000) * 0.9;
+      let frameDelta = deltaMs;
+      if (lowPerfMode) {
+        motionTickAccumulator += deltaMs;
+        if (motionTickAccumulator < 28) {
+          return;
+        }
+        frameDelta = motionTickAccumulator;
+        motionTickAccumulator = 0;
+      }
+
+      phase += (frameDelta / 1000) * 0.9;
 
       const { hover, px, py } = motionState;
-      const intensity = 1 + hover * 2.1;
+      const motionGain = lowPerfMode ? 0.72 : 1;
+      const intensity = 1 + hover * (lowPerfMode ? 1.2 : 2.1);
+      const pointerStrength = lowPerfMode ? 0.62 : 1;
 
       const sinA = Math.sin(phase * 1.1);
       const sinB = Math.sin(phase * 1.38 + 0.9);
       const sinC = Math.sin(phase * 0.85 + 1.8);
 
-      const pointerX = px * (8 + hover * 14);
-      const pointerY = py * (6 + hover * 11);
+      const pointerX = px * (8 + hover * 14) * pointerStrength;
+      const pointerY = py * (6 + hover * 11) * pointerStrength;
 
-      setBackX(sinA * 5.8 * intensity + pointerX * 0.4);
-      setBackY(sinB * 3.6 * intensity + pointerY * 0.35);
-      setBackRotate(sinC * 0.9 * intensity);
+      setBackX(sinA * 5.8 * intensity * motionGain + pointerX * 0.4);
+      setBackY(sinB * 3.6 * intensity * motionGain + pointerY * 0.35);
+      setBackRotate(sinC * 0.9 * intensity * motionGain);
 
-      setMiddleX(sinB * 6.6 * intensity + pointerX * 0.52);
-      setMiddleY(sinC * 4.2 * intensity + pointerY * 0.45);
-      setMiddleRotate(sinA * 1.2 * intensity);
+      setMiddleX(sinB * 6.6 * intensity * motionGain + pointerX * 0.52);
+      setMiddleY(sinC * 4.2 * intensity * motionGain + pointerY * 0.45);
+      setMiddleRotate(sinA * 1.2 * intensity * motionGain);
 
-      setFrontX(sinC * 7.4 * intensity + pointerX * 0.7);
-      setFrontY(sinA * 4.9 * intensity + pointerY * 0.58);
-      setFrontRotate(sinB * 1.45 * intensity);
+      setFrontX(sinC * 7.4 * intensity * motionGain + pointerX * 0.7);
+      setFrontY(sinA * 4.9 * intensity * motionGain + pointerY * 0.58);
+      setFrontRotate(sinB * 1.45 * intensity * motionGain);
 
-      filterTickAccumulator += deltaMs;
+      if (lowPerfMode) {
+        return;
+      }
+
+      filterTickAccumulator += frameDelta;
       if (filterTickAccumulator < 34) {
         return;
       }
