@@ -80,6 +80,8 @@
 }
 
 .outro {
+  --outro-brand-size: 60px;
+
   padding-bottom: 135px;
   margin-top: 180px;
   text-align: center;
@@ -88,13 +90,14 @@
 .outroBrand {
   margin: 0;
   font-family: var(--font-brand), sans-serif;
-  font-size: 60px;
+  font-size: var(--outro-brand-size);
+  max-width: 100%;
   color: #e64210;
 }
 
 .outroText {
   margin: 12px 0 0;
-  font-size: 25px;
+  font-size: calc(var(--outro-brand-size) * 0.42);
 }
 
 @media (max-width: 1200px) {
@@ -145,14 +148,7 @@
   }
 
   .outro {
+    --outro-brand-size: clamp(30px, 8.4vw, 44px);
     margin-top: 54px;
-  }
-
-  .outroBrand {
-    font-size: 44px;
-  }
-
-  .outroText {
-    font-size: 18px;
   }
 }

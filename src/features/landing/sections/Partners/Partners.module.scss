@@ -59,8 +59,9 @@
   }
 
   .grid {
+    margin-top: 90px;
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 70px;
   }
 
   .card {
@@ -75,6 +76,10 @@
 
   .title {
     font-size: 34px;
+  }
+
+  .grid {
+    gap: 50px;
   }
 
   .card {
