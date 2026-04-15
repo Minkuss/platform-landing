@@ -24,6 +24,10 @@ export function Hero() {
     hover: 0,
     px: 0,
     py: 0,
+    targetHover: 0,
+    targetPx: 0,
+    targetPy: 0,
+    returning: false,
   });
 
   useEffect(() => {
@@ -81,6 +85,20 @@ export function Hero() {
       }
 
       phase += (frameDelta / 1000) * 0.9;
+
+      const smoothing = motionState.returning ? 0.08 : 0.19;
+      motionState.hover += (motionState.targetHover - motionState.hover) * smoothing;
+      motionState.px += (motionState.targetPx - motionState.px) * smoothing;
+      motionState.py += (motionState.targetPy - motionState.py) * smoothing;
+
+      const nearTarget =
+        Math.abs(motionState.targetHover - motionState.hover) < 0.002 &&
+        Math.abs(motionState.targetPx - motionState.px) < 0.002 &&
+        Math.abs(motionState.targetPy - motionState.py) < 0.002;
+
+      if (motionState.returning && nearTarget) {
+        motionState.returning = false;
+      }
 
       const { hover, px, py } = motionState;
       const motionGain = lowPerfMode ? 0.72 : 1;
@@ -140,16 +158,12 @@ export function Hero() {
 
     return () => {
       gsap.ticker.remove(update);
-      gsap.killTweensOf(motionState);
     };
   }, []);
 
   const handleWavesPointerEnter = () => {
-    gsap.to(motionStateRef.current, {
-      hover: 1,
-      duration: 0.45,
-      ease: "power2.out",
-    });
+    motionStateRef.current.targetHover = 1;
+    motionStateRef.current.returning = false;
   };
 
   const handleWavesPointerMove: PointerEventHandler<HTMLDivElement> = (event) => {
@@ -157,22 +171,16 @@ export function Hero() {
     const normalizedX = (event.clientX - rect.left) / rect.width - 0.5;
     const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
 
-    gsap.to(motionStateRef.current, {
-      px: normalizedX,
-      py: normalizedY,
-      duration: 0.28,
-      ease: "power2.out",
-    });
+    motionStateRef.current.targetPx = normalizedX;
+    motionStateRef.current.targetPy = normalizedY;
+    motionStateRef.current.returning = false;
   };
 
   const handleWavesPointerLeave = () => {
-    gsap.to(motionStateRef.current, {
-      hover: 0,
-      px: 0,
-      py: 0,
-      duration: 0.75,
-      ease: "power3.out",
-    });
+    motionStateRef.current.targetHover = 0;
+    motionStateRef.current.targetPx = 0;
+    motionStateRef.current.targetPy = 0;
+    motionStateRef.current.returning = true;
   };
 
   return (
