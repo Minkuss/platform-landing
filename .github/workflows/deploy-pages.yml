@@ -38,8 +38,10 @@ jobs:
           OWNER="${GITHUB_REPOSITORY_OWNER}"
           if [ "$REPO" = "${OWNER}.github.io" ]; then
             echo "BASE_PATH=" >> "$GITHUB_ENV"
+            echo "Using root path deployment"
           else
             echo "BASE_PATH=/$REPO" >> "$GITHUB_ENV"
+            echo "Using BASE_PATH=/$REPO"
           fi
 
       - name: Build static export
