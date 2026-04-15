@@ -16,8 +16,8 @@ const browler = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Платформа | Лендинг",
-  description: "Шаблон лендинга на Next.js, SCSS Modules и GSAP",
+  title: "Платформа",
+  description: "Платформа для обучения и конкурсных заданий",
 };
 
 export default function RootLayout({
