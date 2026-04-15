@@ -1,13 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { navItems } from "../../data/landingData";
 import { Brand } from "../../components/ui/Brand/Brand";
 import { LayoutContainer } from "../../components/ui/LayoutContainer/LayoutContainer";
 import styles from "./Header.module.scss";
 
+const emptySubscribe = () => () => {};
+
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isHydrated = useSyncExternalStore(emptySubscribe, () => true, () => false);
+  const portalTarget = isHydrated ? document.body : null;
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
@@ -44,56 +49,72 @@ export function Header() {
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className={styles.headerWrap}>
-      <LayoutContainer>
-        <div className={styles.headerRow}>
-          <Brand />
+    <>
+      <header className={styles.headerWrap}>
+        <LayoutContainer>
+          <div className={styles.headerRow}>
+            <Brand />
 
-          <div className={styles.navPill}>
-            <nav className={styles.nav}>
-              {navItems.map((item) => (
-                <a key={item} href="#">
-                  {item}
-                </a>
-              ))}
-            </nav>
+            <div className={styles.navPill}>
+              <nav className={styles.nav}>
+                {navItems.map((item) => (
+                  <a key={item} href="#">
+                    {item}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            <button
+              className={`${styles.burger}${isMenuOpen ? ` ${styles.burgerOpen}` : ""}`}
+              aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-nav"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              type="button"
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
+        </LayoutContainer>
+      </header>
 
-          <button
-            className={`${styles.burger}${isMenuOpen ? ` ${styles.burgerOpen}` : ""}`}
-            aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-nav"
-            onClick={() => setIsMenuOpen((prev) => !prev)}
-            type="button"
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </div>
-
-        <div
-          id="mobile-nav"
-          className={`${styles.mobileMenu}${isMenuOpen ? ` ${styles.mobileMenuOpen}` : ""}`}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Мобильная навигация"
-        >
-          <nav className={styles.mobileNav}>
-            {navItems.map((item, index) => (
-              <a
-                key={item}
-                href="#"
+      {portalTarget
+        ? createPortal(
+            <>
+              <div
+                className={`${styles.mobileBackdrop}${isMenuOpen ? ` ${styles.mobileBackdropOpen}` : ""}`}
                 onClick={closeMenu}
-                style={{ transitionDelay: `${80 + index * 55}ms` }}
+                aria-hidden
+              />
+              <div
+                id="mobile-nav"
+                className={`${styles.mobileMenu}${isMenuOpen ? ` ${styles.mobileMenuOpen}` : ""}`}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Мобильная навигация"
+                aria-hidden={!isMenuOpen}
               >
-                {item}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </LayoutContainer>
-    </header>
+                <nav className={styles.mobileNav}>
+                  {navItems.map((item, index) => (
+                    <a
+                      key={item}
+                      href="#"
+                      onClick={closeMenu}
+                      tabIndex={isMenuOpen ? 0 : -1}
+                      style={{ transitionDelay: `${80 + index * 55}ms` }}
+                    >
+                      {item}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            </>,
+            portalTarget,
+          )
+        : null}
+    </>
   );
 }

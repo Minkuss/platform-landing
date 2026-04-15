@@ -107,7 +107,12 @@
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.28s ease, visibility 0.28s ease;
-    z-index: 65;
+    z-index: 2000;
+  }
+
+  .mobileBackdropOpen {
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .mobileMenu {
@@ -127,7 +132,7 @@
     transform: translateY(-14px) scale(0.985);
     pointer-events: none;
     transition: opacity 0.32s ease, transform 0.32s ease;
-    z-index: 70;
+    z-index: 2010;
   }
 
   .mobileMenuOpen {
